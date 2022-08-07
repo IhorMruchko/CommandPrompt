@@ -11,6 +11,7 @@ CommandRegestry.Register.Add(cb => cb.Name("cls")
                                                                                                .Build())
                                                           .Body((args, opt) => Console.Write($"Hello, {args.ValueOf<string>("name")}!"))
                                                           .Build())
-                                     .Build());
+                                     .Build())
+                        .Add(cb => cb.Name("opt").Build());
 
 CommandRegestry.Invoke(args);

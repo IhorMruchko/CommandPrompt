@@ -8,17 +8,17 @@
     <Version>0.0.0.1</Version>
     <Authors>Ihor Mruchko</Authors>
     <Description>Provides configuring of commands that can be used in command prompt.</Description>
-    <PackageIcon>Command prompt icon.png</PackageIcon>
     <PackageReadmeFile>ReadME.md</PackageReadmeFile>
+    <PackageId>CommandPrompt.Configuring</PackageId>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageIcon>Command prompt icon.png</PackageIcon>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="Command prompt icon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
+   <ItemGroup>
+    <None Update="Command prompt icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Update="ReadME.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
