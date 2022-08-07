@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CommandPrompt.Benchmark": {
+      "commandName": "Project",
+      "commandLineArgs": "cls"
+    }
+  }
+}

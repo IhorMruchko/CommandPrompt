@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandPrompt.Test", "Comma
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandPrompt.Benchmark", "CommandPrompt.Benchmark\CommandPrompt.Benchmark.csproj", "{488E99C8-9362-4CFC-9C10-BCF5133487BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandPrompt.Example", "CommandPrompt.Example\CommandPrompt.Example.csproj", "{5C68B7F3-782F-4E43-98B7-6F69018FB792}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandPrompt.Example", "CommandPrompt.Example\CommandPrompt.Example.csproj", "{5C68B7F3-782F-4E43-98B7-6F69018FB792}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

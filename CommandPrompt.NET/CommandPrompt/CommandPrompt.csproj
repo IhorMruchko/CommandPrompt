@@ -1,7 +1,33 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <Version>0.0.0.1</Version>
+    <Authors>Ihor Mruchko</Authors>
+    <Description>Provides configuring of commands that can be used in command prompt.</Description>
+    <PackageIcon>Command prompt icon.png</PackageIcon>
+    <PackageReadmeFile>ReadME.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Command prompt icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\Command prompt icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ReadME.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
