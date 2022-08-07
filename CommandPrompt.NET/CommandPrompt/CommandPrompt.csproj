@@ -13,14 +13,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Command prompt icon.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\Command prompt icon.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <Content Include="Command prompt icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
