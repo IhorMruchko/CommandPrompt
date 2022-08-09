@@ -11,8 +11,13 @@
 # About
 This package is created to simplify command configuration for CLIs.
 ## Main info
-Current version: **0.0.0.1**
+Current version: **0.0.0.2**
 .NET vestion: **.NET Standart 2.0**
+
+Version **0.0.0.2** Updates:
+* Add proper building sequence.
+* Fixed async execution.
+
 ## Planning
 - [ ] Increase variety of adding overloads/inner commands.
 - [ ] Provide default converters.
@@ -22,11 +27,11 @@ Current version: **0.0.0.1**
 
 # Install
 - For package manager:
-  > `Install-Package CommandPrompt -Version 0.0.0.1`
+  > `Install-Package CommandPrompt.Configuring -Version 0.0.0.1`
 - For .NET CLI:
-  > `dotnet add package CommandPrompt --version 0.0.0.1`
+  > `dotnet add package CommandPrompt.Configuring --version 0.0.0.1`
 - Add reference to your project:
-  > `<PackageReference Include="CommandPrompt" Version="0.0.0.1" />`
+  > `<PackageReference Include="CommandPrompt.Configuring" Version="0.0.0.1" />`
 # Usage
 
 ## Configuration
@@ -58,5 +63,5 @@ To access value of the argument you can use `ValueOf` extension method of List o
 ## Execution
 After all commands are added, you may execute one of them. To do this, use method `Invoke` and path array of string.
 ```C#
-CommandRegestry.Invoke(args);
+await CommandRegestry.Invoke(args);
 ```

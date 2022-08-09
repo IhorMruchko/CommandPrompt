@@ -5,11 +5,12 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.0.0.1</Version>
+    <Version>0.0.0.2</Version>
     <Authors>Ihor Mruchko</Authors>
     <Description>Provides configuring of commands that can be used in command prompt.</Description>
     <PackageReadmeFile>ReadME.md</PackageReadmeFile>
     <PackageId>CommandPrompt.Configuring</PackageId>
+    <PackageReleaseNotes>Add async execution. Fixed building sequence.</PackageReleaseNotes>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageIcon>Command prompt icon.png</PackageIcon>
   </PropertyGroup>
