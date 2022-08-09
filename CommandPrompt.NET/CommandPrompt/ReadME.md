@@ -11,7 +11,7 @@
 # About
 This package is created to simplify command configuration for CLIs.
 ## Main info
-Current version: **0.0.0.2**
+Current version: **0.0.0.2**<br/>
 .NET vestion: **.NET Standart 2.0**
 
 Version **0.0.0.2** Updates:
