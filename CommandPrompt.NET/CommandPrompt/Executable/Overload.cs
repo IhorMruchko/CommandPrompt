@@ -20,7 +20,7 @@ namespace CommandPrompt.Executable
 
         public bool IsAsync => AsyncBody is null == false && Body is null;
 
-        public async void Invoke()
+        public async Task Invoke()
         {
             if (IsAsync)
             {

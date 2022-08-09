@@ -2,6 +2,6 @@
 {
     public interface ICommandNameSetter
     {
-        ICommandBodySetter Name(string Name);
+        IOverloadsSetter Name(string Name);
     }
 }

@@ -13,7 +13,9 @@ namespace CommandPrompt.Builders.CommandBuilding
     public class CommandBuilder : ICommandNameSetter,
                                   ICommandBodySetter,
                                   IExecutableSetter,
-                                  ICommandCreator
+                                  ICommandCreator,
+                                  ICommandExecutionSetter,
+                                  IOverloadsSetter
     {
         private readonly Command _command = new Command();
 
@@ -22,19 +24,29 @@ namespace CommandPrompt.Builders.CommandBuilding
         /// </summary>
         /// <param name="Name">Value of the command name.</param>
         /// <returns>CommandBuilder that allows adding overloads or inner commands and building object.</returns>
-        public ICommandBodySetter Name(string Name)
+        public IOverloadsSetter Name(string Name)
         {
             _command.Name = Name;
             return this;
         }
 
-        public IExecutableSetter Body(Action<List<ArgumentBase>, List<ArgumentBase>> commandBody)
+        /// <summary>
+        /// Set default overload without parameters.
+        /// </summary>
+        /// <param name="commandBody">Function that will be invoked on command execution.</param>
+        /// <returns>CommandBuilder without settable `body`.</returns>
+        public ICommandExecutionSetter Body(Action<List<ArgumentBase>, List<ArgumentBase>> commandBody)
         {
             AddOverload(new Overload() { Body = commandBody });
             return this;
         }
 
-        public IExecutableSetter Body(Func<List<ArgumentBase>, List<ArgumentBase>, Task> commandBody)
+        /// <summary>
+        /// Set default overload without parameters with async realisation.
+        /// </summary>
+        /// <param name="commandBody">Async function that will be invoked and awaited on command execution</param>
+        /// <returns>CommandBuilder without settable `body`.</returns>
+        public ICommandExecutionSetter Body(Func<List<ArgumentBase>, List<ArgumentBase>, Task> commandBody)
         {
             AddOverload(new Overload() { AsyncBody = commandBody });
             return this;
@@ -45,7 +57,7 @@ namespace CommandPrompt.Builders.CommandBuilding
         /// </summary>
         /// <param name="overload">Overload instance.</param>
         /// <returns>CommandBuilder that allows adding overloads or inner commands and building object.</returns>
-        public IExecutableSetter AddOverload(Overload overload)
+        public ICommandExecutionSetter AddOverload(Overload overload)
         {
             _command.Overloads.Add(overload);
             return this;
@@ -55,7 +67,7 @@ namespace CommandPrompt.Builders.CommandBuilding
         /// </summary>
         /// <param name="overloadBuilder">Builder that creates overload.</param>
         /// <returns>CommandBuilder that allows adding overload or inner commands and build object.</returns>
-        public IExecutableSetter AddOverload(Func<IOverloadSetter, Overload> overloadBuilder)
+        public ICommandExecutionSetter AddOverload(Func<IOverloadSetter, Overload> overloadBuilder)
         {
             _command.Overloads.Add(overloadBuilder?.Invoke(new OverloadBuilder()));
             return this;
@@ -66,7 +78,7 @@ namespace CommandPrompt.Builders.CommandBuilding
         /// </summary>
         /// <param name="innerCommand">Instance of the inner command.</param>
         /// <returns>CommandBuilder that allows adding overload or inner commands and build object.</returns>
-        public IExecutableSetter AddInner(Command innerCommand)
+        public ICommandExecutionSetter AddInner(Command innerCommand)
         {
             _command.InnerComands.Add(innerCommand);
             return this;
@@ -77,7 +89,7 @@ namespace CommandPrompt.Builders.CommandBuilding
         /// </summary>
         /// <param name="commandBuilder">Builder that creates command.</param>
         /// <returns>CommandBuilder that allows adding overloads or inner commands and build object.</returns>
-        public IExecutableSetter AddInner(Func<ICommandNameSetter, Command> commandBuilder)
+        public ICommandExecutionSetter AddInner(Func<ICommandNameSetter, Command> commandBuilder)
         {
             _command.InnerComands.Add(commandBuilder?.Invoke(new CommandBuilder()));
             return this;

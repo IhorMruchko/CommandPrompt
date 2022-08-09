@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CommandPrompt.Executable
 {
@@ -37,21 +38,21 @@ namespace CommandPrompt.Executable
             return IsCalled;
         }
 
-        public void Execute()
+        public async Task Execute()
         {
             if (_state == CallingState.CalledInnerCommand)
             {
-                InnerComands.FirstOrDefault(i => i.IsCalled)?.Execute();
+                await InnerComands.FirstOrDefault(i => i.IsCalled)?.Execute();
             }
 
             if (_state == CallingState.CalledOverload)
             {
-                Overloads.FirstOrDefault(i => i.IsCalled)?.Invoke();
+                await Overloads.FirstOrDefault(i => i.IsCalled)?.Invoke();
             }
 
             if (_state == (CallingState.CalledOverload | CallingState.CalledInnerCommand))
             {
-                InnerComands.FirstOrDefault(i => i.IsCalled)?.Execute();
+                await InnerComands.FirstOrDefault(i => i.IsCalled)?.Execute();
             }
             _state = CallingState.NotCalled;
         }

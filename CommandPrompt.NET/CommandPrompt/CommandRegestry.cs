@@ -3,6 +3,7 @@ using CommandPrompt.Executable;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CommandPrompt
 {
@@ -26,13 +27,13 @@ namespace CommandPrompt
             return _regestry;
         }
 
-        public static void Invoke(string[] args)
+        public static async Task Invoke(string[] args)
         {
             foreach(var command in _regestry._commands)
             {
                 if (command.CheckIsCalled(args.ToList()))
                 {
-                    command.Execute();
+                    await command.Execute();
                     return;
                 }
             }

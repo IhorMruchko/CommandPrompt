@@ -4,14 +4,14 @@ using System;
 
 namespace CommandPrompt.Builders.CommandBuilding
 {
-    public interface IExecutableSetter : ICommandCreator
+    public interface IExecutableSetter
     {
-        IExecutableSetter AddOverload(Overload overload);
+        ICommandExecutionSetter AddOverload(Overload overload);
 
-        IExecutableSetter AddOverload(Func<IOverloadSetter, Overload> overloadBuilder);
+        ICommandExecutionSetter AddOverload(Func<IOverloadSetter, Overload> overloadBuilder);
 
-        IExecutableSetter AddInner(Command innerCommand);
+        ICommandExecutionSetter AddInner(Command innerCommand);
 
-        IExecutableSetter AddInner(Func<ICommandNameSetter, Command> commandBuilder);
+        ICommandExecutionSetter AddInner(Func<ICommandNameSetter, Command> commandBuilder);
     }
 }
