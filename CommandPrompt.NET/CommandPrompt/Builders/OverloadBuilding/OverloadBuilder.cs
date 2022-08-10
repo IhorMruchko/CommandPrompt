@@ -12,6 +12,15 @@
     {
         private readonly Overload _overload = new Overload();
 
+        public IOverloadSetter AddRequiredArgument<TArgument>(string argumentName)
+        {
+            _overload.RequiredArgs.Add(new RequiredArgument<TArgument>()
+            {
+                Name = argumentName,
+            });
+            return this;
+        }
+
         public IOverloadSetter AddRequiredArgument<TArgument>(RequiredArgument<TArgument> argument)
         {
             _overload.RequiredArgs.Add(argument);
@@ -24,6 +33,11 @@
         {
             _overload.RequiredArgs.Add(argumentBuilder.Invoke(new RequiredArgumentBuilder<TArgument>()));
             return this;
+        }
+
+        public IOverloadSetter AddOptionalArgument<TArgument>(string argumentName)
+        {
+            throw new NotImplementedException();
         }
 
         public IOverloadSetter AddOptionalArgument<TArgument>(OptionalArgument<TArgument> argument)

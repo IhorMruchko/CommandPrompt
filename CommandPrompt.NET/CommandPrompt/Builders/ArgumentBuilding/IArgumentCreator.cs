@@ -6,7 +6,9 @@ namespace CommandPrompt.Builders.ArgumentBuilding
     public interface IArgumentCreator<TArgument>
     {
         IArgumentCreator<TArgument> Validator(Func<TArgument, bool> validator);
-        
+
+        IArgumentCreator<TArgument> Message(string validationMessage);
+
         Argument<TArgument> Build();
     }
 }

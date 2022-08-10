@@ -11,12 +11,15 @@
 # About
 This package is created to simplify command configuration for CLIs.
 ## Main info
-Current version: **0.0.0.2**<br/>
+Current version: **0.0.0.2**
 .NET vestion: **.NET Standart 2.0**
 
-Version **0.0.0.2** Updates:
+Version **0.0.0.2** updates:
 * Add proper building sequence.
 * Fixed async execution.
+
+Version **0.0.0.3** updates:
+* Add validation messages.
 
 ## Planning
 - [ ] Increase variety of adding overloads/inner commands.
@@ -27,11 +30,11 @@ Version **0.0.0.2** Updates:
 
 # Install
 - For package manager:
-  > `Install-Package CommandPrompt.Configuring -Version 0.0.0.1`
+  > `Install-Package CommandPrompt.Configuring -Version 0.0.0.3`
 - For .NET CLI:
-  > `dotnet add package CommandPrompt.Configuring --version 0.0.0.1`
+  > `dotnet add package CommandPrompt.Configuring --version 0.0.0.3`
 - Add reference to your project:
-  > `<PackageReference Include="CommandPrompt.Configuring" Version="0.0.0.1" />`
+  > `<PackageReference Include="CommandPrompt.Configuring" Version="0.0.0.3" />`
 # Usage
 
 ## Configuration

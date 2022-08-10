@@ -2,7 +2,7 @@
   "profiles": {
     "CommandPrompt.Example": {
       "commandName": "Project",
-      "commandLineArgs": "as Ihor\r\n"
+      "commandLineArgs": "hello ihor\r\n"
     }
   }
 }

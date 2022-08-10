@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommandPrompt.Validators;
+using System;
 
 namespace CommandPrompt.Arguments
 {
@@ -6,7 +7,7 @@ namespace CommandPrompt.Arguments
     {
         public Converter<string, TArgument> Converter { get; internal set; }
 
-        public Func<TArgument, bool> Validator { get; internal set; }
+        public Validator<TArgument> Validator { get; internal set; }
 
         public override string ToString()
         {
@@ -28,7 +29,12 @@ namespace CommandPrompt.Arguments
 
         protected bool Validate()
         {
-            return Validator?.Invoke((TArgument)Value) ?? true;
+            if (Validator.IsValid((TArgument)Value))
+            {
+                return true;
+            }
+            Console.Write(Validator.GetMessage(Name));
+            return false;
         }
 
         protected bool TryValidate(string argValue)

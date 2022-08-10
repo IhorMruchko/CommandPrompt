@@ -27,6 +27,12 @@ namespace CommandPrompt.Builders.ArgumentBuilding
             return this;
         }
 
+        public IArgumentCreator<TArgument> Message(string validationMessage)
+        {
+            argument.Validator.Message = validationMessage;
+            return this;
+        }
+
         public Argument<TArgument> Build()
         {
             return argument;
