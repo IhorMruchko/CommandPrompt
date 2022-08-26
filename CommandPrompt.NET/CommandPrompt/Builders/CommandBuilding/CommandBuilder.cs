@@ -4,30 +4,62 @@ using System.Threading.Tasks;
 using CommandPrompt.Arguments;
 using CommandPrompt.Builders.OverloadBuilding;
 using CommandPrompt.Executable;
+using CommandPrompt.Extensions;
 
 namespace CommandPrompt.Builders.CommandBuilding
 {
-    /// <summary>
-    /// Creates new command step-by-step in declarative way.
-    /// </summary>
-    public class CommandBuilder : ICommandNameSetter,
-                                  ICommandBodySetter,
-                                  IExecutableSetter,
-                                  ICommandCreator,
-                                  ICommandExecutionSetter,
-                                  IOverloadsSetter
+    internal class CommandBuilder : ICommandNameSetter,
+                                    ICommandBodySetter,
+                                    IExecutableSetter,
+                                    ICommandExecutionSetter,
+                                    IOverloadsSetter,
+                                    ICommandBuilder
     {
         private readonly Command _command = new Command();
+
 
         /// <summary>
         /// Set name of the command.
         /// </summary>
-        /// <param name="Name">Value of the command name.</param>
+        /// <param name="name">Value of the command name.</param>
         /// <returns>CommandBuilder that allows adding overloads or inner commands and building object.</returns>
-        public IOverloadsSetter Name(string Name)
+        /// <exception cref="ArgumentException"/>
+        public IOverloadsSetter Name(string name)
         {
-            _command.Name = Name;
+            var nameValidator = name.ToValidator()
+                                    .ShouldNot(t => t is null).WithMessage("Name should not be null")
+                                    .ShouldNot(t => t.Trim().Equals(string.Empty)).WithMessage("Name should not be empty")
+                                    .Should(t => CommandRegestry.IsUnique(name)).WithMessage("Name should be unique");
+
+            if (nameValidator.Validate() == false)
+            {
+                throw new ArgumentException(nameValidator.Exception, nameof(name));
+            }
+
+            _command.Name = name;
             return this;
+        }
+
+        /// <summary>
+        /// Set default overload that would not contains any parameters.
+        /// </summary>
+        /// <param name="commandBody"><c>Action</c> that will be converted to <c>Action&lt;List&lt;ArgumentBase&gt; List&lt;ArgumentBase&gt;&gt;</c></param>
+        /// <returns>CommandBuilder that allows adding overloads or inner commands and building object.</returns>
+        public ICommandExecutionSetter Body(Action commandBody)
+        {
+            AddOverload(new Overload() { Name = _command.Name + " parametless", Body = (args, opt) => commandBody() });
+            return this;
+        }
+
+        /// <summary>
+        /// Set default overload that would not contains any parameters.
+        /// </summary>
+        /// <param name="commandBody"><c>Func</c> that will be converted to <c>Action&lt;List&lt;ArgumentBase&gt; List&lt;ArgumentBase&gt;&gt;</c></param>
+        /// <returns>CommandBuilder that allows adding overloads or inner commands and building object.</returns>
+        public ICommandExecutionSetter Body(Func<Task> commandBody)
+        {
+            AddOverload(new Overload() { Name = _command.Name + " parametless", AsyncBody = async (args, opt) => await commandBody() });
+            throw new NotImplementedException();
         }
 
         /// <summary>

@@ -19,6 +19,22 @@ namespace CommandPrompt.Arguments
             };
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is OptionalArgument<TArgument> arg &&
+                arg.Name.Equals(Name, StringComparison.InvariantCultureIgnoreCase);
+        }
+        
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"{Name} of type {typeof(TArgument)} |opt";
+        }
+
         public override bool Parse(ref int i, ref List<string> args)
         {
             foreach (var parser in _parsers)
@@ -31,6 +47,16 @@ namespace CommandPrompt.Arguments
             }
 
             return false;
+        }
+
+        public override ArgumentBase Copy()
+        {
+            return new OptionalArgument<TArgument>()
+            {
+                Name = Name,
+                Converter = Converter?.Clone() as Converter<string, TArgument>,
+                Validator = Validator?.Clone() as Func<TArgument, bool>
+            };
         }
 
         private void ParseIfContains(ref int i, ref List<string> args)
@@ -50,5 +76,6 @@ namespace CommandPrompt.Arguments
             args.RemoveRange(i, 2);
             --i;
         }
+
     }
 }

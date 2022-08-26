@@ -1,5 +1,7 @@
 ﻿using CommandPrompt.Arguments;
+using CommandPrompt.Executable;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CommandPrompt.Extensions
 {
@@ -12,6 +14,11 @@ namespace CommandPrompt.Extensions
             return argument is null
                 ? defaultValue
                 : (TValue)argument.Value;
+        }
+
+        public static IEnumerable<Command> GetCommands(this List<Command> container)
+        {
+            return container.SelectMany(c => c.InnerComands.GetCommands());
         }
     }
 }

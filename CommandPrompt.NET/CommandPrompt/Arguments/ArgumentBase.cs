@@ -13,9 +13,16 @@ namespace CommandPrompt.Arguments
 
         public abstract bool Parse(ref int i, ref List<string> args);
 
+        /// <summary>
+        /// Create a copy of argument.
+        /// </summary>
+        /// <returns>Copy of the argument.</returns>
+        public abstract ArgumentBase Copy();
+
         public virtual bool IsCalled(string v)
         {
-            return Name.Equals(v.TrimStart('-').Split('=')[0]);
+            return Name.Equals(v.TrimStart('-').Split('=')[0], 
+                StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

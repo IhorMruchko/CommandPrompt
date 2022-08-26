@@ -8,7 +8,11 @@ namespace CommandPrompt.Builders.ArgumentBuilding
                                                        IArgumentCreator<TArgument>
     {
         protected Argument<TArgument> argument;
-
+        /// <summary>
+        /// Set name of the object.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public IArgumentConverterSetter<TArgument> Name(string name)
         {
             argument.Name = name;
@@ -24,12 +28,6 @@ namespace CommandPrompt.Builders.ArgumentBuilding
         public IArgumentCreator<TArgument> Validator(Func<TArgument, bool> validator)
         {
             argument.Validator = validator;
-            return this;
-        }
-
-        public IArgumentCreator<TArgument> Message(string validationMessage)
-        {
-            argument.Validator.Message = validationMessage;
             return this;
         }
 

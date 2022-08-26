@@ -7,12 +7,18 @@
     using CommandPrompt.Builders.ArgumentBuilding;
     using CommandPrompt.Executable;
 
-    public class OverloadBuilder : IOverloadSetter,
+    public class OverloadBuilder : IOverloadNameSetter,
                                    IOverloadCreator
     {
         private readonly Overload _overload = new Overload();
-
-        public IOverloadSetter AddRequiredArgument<TArgument>(string argumentName)
+        
+        public IOverloadSetter Name(string overloadName)
+        {
+            _overload.Name = overloadName;
+            return this;
+        }
+        
+        public IOverloadSetter AddArgument<TArgument>(string argumentName)
         {
             _overload.RequiredArgs.Add(new RequiredArgument<TArgument>()
             {
@@ -21,13 +27,13 @@
             return this;
         }
 
-        public IOverloadSetter AddRequiredArgument<TArgument>(RequiredArgument<TArgument> argument)
+        public IOverloadSetter AddArgument<TArgument>(Argument<TArgument> argument)
         {
             _overload.RequiredArgs.Add(argument);
             return this;
         }
 
-        public IOverloadSetter AddRequiredArgument<TArgument>(
+        public IOverloadSetter AddArgument<TArgument>(
             Func<IArgumentNameSetter<TArgument>,
             Argument<TArgument>> argumentBuilder)
         {
@@ -35,22 +41,39 @@
             return this;
         }
 
-        public IOverloadSetter AddOptionalArgument<TArgument>(string argumentName)
+        public IOverloadSetter AddOptArgument<TArgument>(string argumentName)
         {
-            throw new NotImplementedException();
+            _overload.OptionalArgs.Add(new OptionalArgument<TArgument>() { Name = argumentName });
+            return this;
         }
 
-        public IOverloadSetter AddOptionalArgument<TArgument>(OptionalArgument<TArgument> argument)
+        public IOverloadSetter AddOptArgument<TArgument>(Argument<TArgument> argument)
         {
             _overload.OptionalArgs.Add(argument);
             return this;
         }
 
-        public IOverloadSetter AddOptionalArgument<TArgument>(
+        public IOverloadSetter AddOptArgument<TArgument>(
             Func<OptionalArgumentBuilder<TArgument>,
             Argument<TArgument>> argumentBuilder)
         {
             _overload.OptionalArgs.Add(argumentBuilder.Invoke(new OptionalArgumentBuilder<TArgument>()));
+            return this;
+        }
+
+        public IOverloadCreator Body(Action body)
+        {
+            _overload.Body = (args, opt) => body();
+            return this;
+        }
+
+        public IOverloadCreator Body(Func<Task> body)
+        {
+            if (_overload.Body is null == false)
+            {
+                return this;
+            }
+            _overload.AsyncBody = (args, opt) => body();
             return this;
         }
 

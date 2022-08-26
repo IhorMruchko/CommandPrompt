@@ -56,5 +56,19 @@ namespace CommandPrompt.Executable
             }
             _state = CallingState.NotCalled;
         }
+
+        /// <summary>
+        /// Create copy of the command.
+        /// </summary>
+        /// <returns>Copy of the command.</returns>
+        public Command Copy()
+        {
+            return new Command
+            {
+                Name = Name,
+                InnerComands = InnerComands.Select(c => c.Copy()).ToList(),
+                Overloads = Overloads.Select(c => c.Copy()).ToList()
+            };
+        }
     }
 }

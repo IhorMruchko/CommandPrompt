@@ -2,7 +2,7 @@
 
 namespace CommandPrompt.Builders.CommandBuilding
 {
-    public interface ICommandCreator
+    public interface ICommandBuilder
     {
         Command Build();
     }

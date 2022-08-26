@@ -3,20 +3,25 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
   <PropertyGroup>
     <Version>0.0.0.2</Version>
     <Authors>Ihor Mruchko</Authors>
     <Description>Provides configuring of commands that can be used in command prompt.</Description>
-    <PackageReadmeFile>ReadME.md</PackageReadmeFile>
     <PackageId>CommandPrompt.Configuring</PackageId>
     <PackageReleaseNotes>Add async execution. Fixed building sequence.</PackageReleaseNotes>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageIcon>Command prompt icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/IhorMruchko/CommandPromp/tree/main/CommandPrompt.NET/CommandPrompt</RepositoryUrl>
+    <PackageReadmeFile>ReadME.md</PackageReadmeFile>
+    <PackageIcon>Command prompt icon.png</PackageIcon>
   </PropertyGroup>
 
-   <ItemGroup>
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>CommandPrompt.Test</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Command prompt icon.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
@@ -26,9 +31,5 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
-
-   <ItemGroup>
-     <Folder Include="Converters\" />
-   </ItemGroup>
 
 </Project>

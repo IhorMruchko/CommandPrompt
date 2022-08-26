@@ -7,6 +7,10 @@ namespace CommandPrompt.Builders.CommandBuilding
 {
     public interface ICommandBodySetter
     {
+        ICommandExecutionSetter Body(Action commandBody);
+        
+        ICommandExecutionSetter Body(Func<Task> commandBody);
+
         ICommandExecutionSetter Body(Action<List<ArgumentBase>, List<ArgumentBase>> commandBody);
 
         ICommandExecutionSetter Body(Func<List<ArgumentBase>, List<ArgumentBase>, Task> commandBody);

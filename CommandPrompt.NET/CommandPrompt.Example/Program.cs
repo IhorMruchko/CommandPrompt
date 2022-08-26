@@ -1,42 +1,28 @@
 ﻿using CommandPrompt;
+using CommandPrompt.Builders;
 using CommandPrompt.Extensions;
 
-CommandRegestry.Register.Add(cb => cb.Name("cls")
-                                     .Body((args, opt) => Console.Clear())
-                                     .Build())
-                        .Add(cb => cb.Name("hello")
-                                     .AddOverload(ob => ob.AddRequiredArgument<string>(ab => ab.Name("name")
-                                                                                               .Converter(c => c)
-                                                                                               .Validator(n => char.IsUpper(n[0]))
-                                                                                               .Message("Value should starts with uppercase!")
-                                                                                               .Build())
-                                                          .Body((args, opt) => Console.Write($"Hello, {args.ValueOf<string>("name")}!"))
-                                                          .Build())
-                                     .Build())
-                        .Add(cb => cb.Name("async")
-                                     .Body(async (args, opt) =>
-                                     {
-                                         Console.WriteLine("Hi");
-                                         await Task.Delay(1500);
-                                         Console.Write("Hello");
-                                     })
-                                     .Build())
-                        .Add(cb => cb.Name("as")
-                                     .AddOverload(ob => ob.AddRequiredArgument<string>(ab => ab.Name("say")
-                                                                                               .Converter(c => c)
-                                                                                               .Build())
-                                                          .Body(async (args, opt) =>
-                                                          {
-                                                              Console.WriteLine("Hi");
-                                                              await Task.Delay(1500);
-                                                              Console.Write($"Hello {args.ValueOf<string>("say")}");
-                                                          })
-                                                          .Build())
-                                     .Build())
-                        .Add(cb => cb.Name("help")
-                                     .AddOverload(ob => ob.AddRequiredArgument<string>("help")
-                                                          .Body((args, opt) => Console.Write("Hello"))
-                                                          .Build())
-                                     .Build());
+var endingArgument = Builder.Optional<char> ()
+                                    .Name("ending")
+                                    .Converter(c => c[0])
+                                    .Build();
 
-await CommandRegestry.Invoke(args);
+ var usernameArgument = Builder.Required<string>()
+                                       .Name("username")
+                                       .Converter(c => c)
+                                       .Validator(c => char.IsUpper(c[0]))
+                                       .Build();
+
+var nameOverload = Builder.Overload.Name("runner")
+                                   .AddArgument(usernameArgument)
+                                   .AddOptArgument(endingArgument)
+                                   .Body((args, opt) => Console.Write($"Hello, {args.ValueOf("username", "Unknown?")} {opt.ValueOf("ending", '!')}"))
+                                   .Build();
+
+var helloCommand = Builder.Command.Name("hello")
+                                  .AddOverload(nameOverload)
+                                  .Build();
+
+CommandRegestry.Register.Add(helloCommand);
+
+Console.WriteLine(CommandRegestry.GetCommand("hello"));

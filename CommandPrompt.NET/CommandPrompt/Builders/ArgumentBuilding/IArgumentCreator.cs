@@ -7,8 +7,6 @@ namespace CommandPrompt.Builders.ArgumentBuilding
     {
         IArgumentCreator<TArgument> Validator(Func<TArgument, bool> validator);
 
-        IArgumentCreator<TArgument> Message(string validationMessage);
-
         Argument<TArgument> Build();
     }
 }

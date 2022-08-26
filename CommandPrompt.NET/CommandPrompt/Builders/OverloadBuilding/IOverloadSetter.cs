@@ -8,17 +8,21 @@ namespace CommandPrompt.Builders.OverloadBuilding
 {
     public interface IOverloadSetter
     {
-        IOverloadSetter AddRequiredArgument<TArgument>(string argumentName);
+        IOverloadSetter AddArgument<TArgument>(string argumentName);
 
-        IOverloadSetter AddRequiredArgument<TArgument>(RequiredArgument<TArgument> argument);
+        IOverloadSetter AddArgument<TArgument>(Argument<TArgument> argument);
        
-        IOverloadSetter AddRequiredArgument<TArgument>(Func<IArgumentNameSetter<TArgument>, Argument<TArgument>> argumentBuilder);
+        IOverloadSetter AddArgument<TArgument>(Func<IArgumentNameSetter<TArgument>, Argument<TArgument>> argumentBuilder);
 
-        IOverloadSetter AddOptionalArgument<TArgument>(string argumentName);
+        IOverloadSetter AddOptArgument<TArgument>(string argumentName);
        
-        IOverloadSetter AddOptionalArgument<TArgument>(OptionalArgument<TArgument> argument);
+        IOverloadSetter AddOptArgument<TArgument>(Argument<TArgument> argument);
 
-        IOverloadSetter AddOptionalArgument<TArgument>(Func<OptionalArgumentBuilder<TArgument>, Argument<TArgument>> argumentBuilder);
+        IOverloadSetter AddOptArgument<TArgument>(Func<OptionalArgumentBuilder<TArgument>, Argument<TArgument>> argumentBuilder);
+
+        IOverloadCreator Body(Action body);
+
+        IOverloadCreator Body(Func<Task> body);
 
         IOverloadCreator Body(Action<List<ArgumentBase>, List<ArgumentBase>> body);
 
