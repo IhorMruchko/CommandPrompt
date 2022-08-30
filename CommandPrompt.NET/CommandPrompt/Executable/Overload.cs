@@ -33,7 +33,6 @@ namespace CommandPrompt.Executable
             {
                 Body?.Invoke(RequiredArgs, OptionalArgs);
             }
-            RestoreInfo();
         }
 
         public bool CheckIsCalled(List<string> args)
@@ -116,20 +115,6 @@ namespace CommandPrompt.Executable
             }
 
             return args;
-        }
-
-        private void RestoreInfo()
-        {
-            IsCalled = false;
-            foreach (var arg in RequiredArgs)
-            {
-                arg.IsValid = false;
-            }
-
-            foreach (var arg in OptionalArgs)
-            {
-                arg.IsValid = false;
-            }
         }
     }
 }

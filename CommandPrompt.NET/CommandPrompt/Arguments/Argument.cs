@@ -1,4 +1,5 @@
-﻿using CommandPrompt.Services;
+﻿using CommandPrompt.Converters.Default;
+using CommandPrompt.Services;
 using CommandPrompt.Validators;
 using System;
 
@@ -6,11 +7,11 @@ namespace CommandPrompt.Arguments
 {
     public abstract class Argument<TArgument> : ArgumentBase
     {
-        public Converter<string, TArgument> Converter { get; internal set; }
+        public CommonConverter<TArgument> Converter { get; internal set; }
 
         public Validator<TArgument> Validator { get; internal set; }
 
-        public TArgument ArgValue { get; internal set; }
+        public override object Value => Converter.Value; 
 
         /// <summary>
         /// Check is object is the same type with save <c>Name</c>.
@@ -40,15 +41,9 @@ namespace CommandPrompt.Arguments
 
         protected bool TryConvert(string argValue)
         {
-            if (Converter == null)
-            {
-                return false;
-            }
             try
             {
-                ArgValue = Converter(argValue);
-                Value = ArgValue;
-                return Value != default;
+                return Converter?.IsAbleToConvert(argValue) ?? false;
             }
             catch (Exception)
             {
@@ -58,7 +53,7 @@ namespace CommandPrompt.Arguments
 
         protected bool Validate()
         {
-            if (Validator?.Validate((TArgument)Value) ?? true)
+            if (Validator?.Validate((TArgument)Converter.Value) ?? true)
             {
                 return true;
             }
@@ -68,8 +63,7 @@ namespace CommandPrompt.Arguments
 
         protected bool TryValidate(string argValue)
         {
-            IsValid = TryConvert(argValue) && Validate();
-            return IsValid;
+            return TryConvert(argValue) && Validate();
         }
     }
 }

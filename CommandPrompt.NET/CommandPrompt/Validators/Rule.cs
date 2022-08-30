@@ -10,6 +10,8 @@ namespace CommandPrompt.Validators
 
         public abstract bool IsFollowed(object value);
 
+        public abstract string Exception(object value);
+
         public abstract Rule Clone();
     }
 }

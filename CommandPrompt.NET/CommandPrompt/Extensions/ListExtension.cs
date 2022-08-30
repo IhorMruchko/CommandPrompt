@@ -9,7 +9,7 @@ namespace CommandPrompt.Extensions
     {
         public static TValue ValueOf<TValue>(this List<ArgumentBase> container, string argName, TValue defaultValue = default)
         {
-            var argument = container.Find(arg => arg.IsCalled(argName) && arg.Value is TValue && arg.IsValid);
+            var argument = container.Find(arg => arg.IsCalled(argName) && arg.Value is TValue);
 
             return argument is null
                 ? defaultValue

@@ -1,11 +1,13 @@
 ﻿using CommandPrompt.Arguments;
+using CommandPrompt.Converters;
+using CommandPrompt.Converters.Default;
 using CommandPrompt.Validators;
 using System;
 
 namespace CommandPrompt.Builders.ArgumentBuilding
 {
     public abstract class ArgumentBuilder<TArgument> : IArgumentNameSetter<TArgument>,
-                                                       IArgumentConverterSetter<TArgument>,
+                                                       IArgumentOptionalsSetter<TArgument>,
                                                        IArgumentCreator<TArgument>
     {
         protected Argument<TArgument> argument;
@@ -14,12 +16,12 @@ namespace CommandPrompt.Builders.ArgumentBuilding
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public IArgumentConverterSetter<TArgument> Name(string name)
+        public IArgumentCreator<TArgument> Name(string name)
         {
             argument.Name = name;
             return this;
         }
-
+        // TODO: Add exception on changing converter.
         public IArgumentCreator<TArgument> Converter(Converter<string, TArgument> converter)
         {
             argument.Converter = converter;
@@ -32,8 +34,18 @@ namespace CommandPrompt.Builders.ArgumentBuilding
             return this;
         }
 
+        public IArgumentCreator<TArgument> Validator(Func<TArgument, bool> validator)
+        {
+            argument.Validator = validator;
+            return this;
+        }
+
         public Argument<TArgument> Build()
         {
+            if (argument.Converter is null)
+            {
+                argument.Converter = ConverterFactory.GetConverter<TArgument>() as CommonConverter<TArgument>;
+            }
             return argument;
         }
     }

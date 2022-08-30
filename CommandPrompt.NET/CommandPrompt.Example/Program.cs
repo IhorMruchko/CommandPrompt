@@ -1,30 +1,22 @@
 ﻿using CommandPrompt;
-using CommandPrompt.Builders;
 using CommandPrompt.Extensions;
 using CommandPrompt.Validators.StringValidators;
 
-var endingArgument = Builder.Optional<char>()
-                                    .Name("ending")
-                                    .Converter(c => c[0])
-                                    .Build();
 
-var usernameArgument = Builder.Required<string>()
-                                       .Name("username")
-                                       .Converter(c => c)
-                                       .Validator(StringValidator.IsUpperCase)
-                                       .Build();
-
-var nameOverload = Builder.Overload.Name("runner")
-                                   .AddArgument(usernameArgument)
-                                   .AddOptArgument(endingArgument)
-                                   .Body((args, opt) => Console.Write($"Hello, {args.ValueOf("username", "Unknown?")} {opt.ValueOf("ending", '!')}"))
-                                   .Build();
-
-var helloCommand = Builder.Command.Name("hello")
-                                  .AddOverload(nameOverload)
-                                  .Build();
-
-CommandRegestry.Register.Add(helloCommand);
+CommandRegestry.Register.Add(cb => cb.Name("hello")
+                                     .AddOverload(ob => ob.AddArgument<string>(ab => ab.Name("username")
+                                                                                       .Validator(StringValidator.IsUpperCase)
+                                                                                       .Build())
+                                                         .AddOptArgument<char>("ending")
+                                     .Body((args, opt) => Console.Write($"Hello, {args.ValueOf("username", "Unknown?")} {opt.ValueOf("ending", '!')}"))
+                                     .Build())
+                            .Build())
+                        .Add(cb => cb.Name("bye")
+                                     .AddOverload(ob => ob.AddArgument(CommandRegestry.GetArgument<string>("username"))
+                                                          .AddOptArgument(CommandRegestry.GetArgument<char>("ending"))
+                                                          .Body((args, opt) => Console.Write($"Bye, {args.ValueOf("username", "Unknown?")} {opt.ValueOf("ending", '!')}"))
+                                                          .Build())
+                        .Build());
 
 while (true)
-    await CommandRegestry.Invoke(Console.ReadLine()?.Split() ?? Array.Empty<string>());
+    await CommandRegestry.Invoke(Console.ReadLine()?.Split(" ") ?? Array.Empty<string>());

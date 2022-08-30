@@ -8,7 +8,7 @@ namespace CommandPrompt.Builders.CommandBuilding
     {
         ICommandExecutionSetter AddOverload(Overload overload);
 
-        ICommandExecutionSetter AddOverload(Func<IOverloadSetter, Overload> overloadBuilder);
+        ICommandExecutionSetter AddOverload(Func<IOverloadNameSetter, Overload> overloadBuilder);
 
         ICommandExecutionSetter AddInner(Command innerCommand);
 

@@ -99,7 +99,7 @@ namespace CommandPrompt.Builders.CommandBuilding
         /// </summary>
         /// <param name="overloadBuilder">Builder that creates overload.</param>
         /// <returns>CommandBuilder that allows adding overload or inner commands and build object.</returns>
-        public ICommandExecutionSetter AddOverload(Func<IOverloadSetter, Overload> overloadBuilder)
+        public ICommandExecutionSetter AddOverload(Func<IOverloadNameSetter, Overload> overloadBuilder)
         {
             _command.Overloads.Add(overloadBuilder?.Invoke(new OverloadBuilder()));
             return this;

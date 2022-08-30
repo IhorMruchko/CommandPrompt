@@ -2,6 +2,6 @@
 {
     public interface IArgumentNameSetter<TArument>
     {
-        IArgumentConverterSetter<TArument> Name(string name);
+        IArgumentCreator<TArument> Name(string name);
     }
 }

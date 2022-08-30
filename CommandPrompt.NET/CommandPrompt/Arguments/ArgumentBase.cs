@@ -7,9 +7,7 @@ namespace CommandPrompt.Arguments
     {
         public string Name { get; internal set; }
 
-        public object Value { get; internal set; }
-
-        public bool IsValid { get; internal set; }
+        public abstract object Value { get; }
 
         public abstract bool Parse(ref int i, ref List<string> args);
 

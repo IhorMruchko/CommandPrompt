@@ -8,10 +8,10 @@ namespace CommandPrompt.Builders.OverloadBuilding
 {
     public interface IOverloadSetter
     {
+        IOverloadSetter AddArgument<TArgument>(Argument<TArgument> argument);
+        
         IOverloadSetter AddArgument<TArgument>(string argumentName);
 
-        IOverloadSetter AddArgument<TArgument>(Argument<TArgument> argument);
-       
         IOverloadSetter AddArgument<TArgument>(Func<IArgumentNameSetter<TArgument>, Argument<TArgument>> argumentBuilder);
 
         IOverloadSetter AddOptArgument<TArgument>(string argumentName);

@@ -2,11 +2,14 @@
 - [Content](#content)
 - [About](#about)
   - [Main info](#main-info)
-  - [Planning](#planning)
+- [Updates](#updates)
+  - [Version _0.0.0.2_ updates:](#version-0002-updates)
+  - [Version _0.0.0.3_ updates:](#version-0003-updates)
 - [Install](#install)
 - [Usage](#usage)
   - [Configuration](#configuration)
   - [Execution](#execution)
+  - [Copying from register](#copying-from-register)
 
 # About
 This package is created to simplify command configuration for CLIs.
@@ -14,19 +17,20 @@ This package is created to simplify command configuration for CLIs.
 Current version: **0.0.0.2**
 .NET vestion: **.NET Standart 2.0**
 
-Version **0.0.0.2** updates:
+# Updates
+
+## Version _0.0.0.2_ updates:
 * Add proper building sequence.
 * Fixed async execution.
 
-Version **0.0.0.3** updates:
-* Add validation messages.
-
-## Planning
-- [ ] Increase variety of adding overloads/inner commands.
-- [ ] Provide default converters.
-- [ ] Allow setting help description for command and provide proper help command invoke.
-- [ ] Add equality for exectutable objects.
-- [ ] Provide attribute configuration.
+## Version _0.0.0.3_ updates:
+* Update validation;
+  > Provide default validators for `string`.
+* Update convertion
+  > Set default converters for `char`, `bool` and `string`;
+* Add copying of objects;
+  > All objects can be copied and used from [`CommandRegestry`](#copying-from-register)
+* Add equaliity check for arguments and overloads.
 
 # Install
 - For package manager:
@@ -68,3 +72,23 @@ After all commands are added, you may execute one of them. To do this, use metho
 ```C#
 await CommandRegestry.Invoke(args);
 ```
+
+## Copying from register
+```C#
+
+CommandRegestry.Register.Add(cb => cb.Name("hello")
+                                     .AddOverload(ob => ob.AddArgument<string>(ab => ab.Name("username")
+                                                                                       .Validator(StringValidator.IsUpperCase)
+                                                                                       .Build())
+                                                         .AddOptArgument<char>("ending")
+                                     .Body((args, opt) => Console.Write($"Hello, {args.ValueOf("username", "Unknown?")} {opt.ValueOf("ending", '!')}"))
+                                     .Build())
+                            .Build())
+                        .Add(cb => cb.Name("bye")
+                                     .AddOverload(ob => ob.AddArgument(CommandRegestry.GetArgument<string>("username"))
+                                                          .AddOptArgument(CommandRegestry.GetArgument<char>("ending"))
+                                                          .Body((args, opt) => Console.Write($"Bye, {args.ValueOf("username", "Unknown?")} {opt.ValueOf("ending", '!')}"))
+                                                          .Build())
+                        .Build());
+```
+Get already registered _argument_, _overload_ or _command_ with `CommandRegestry.GetArgument<>()`, `CommandRegestry.GetOverload()`, `CommandRegestry.GetCommand`.

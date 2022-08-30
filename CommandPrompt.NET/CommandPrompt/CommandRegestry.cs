@@ -68,9 +68,9 @@ namespace CommandPrompt
         /// </summary>
         /// <param name="argumentName">Title of registered argument to copy.</param>
         /// <returns>Copy of registered argument.</returns>
-        public static ArgumentBase GetArgument(string argumentName)
+        public static Argument<TArgument> GetArgument<TArgument>(string argumentName)
             => Arguments.First(arg => arg.IsCalled(argumentName))
-                        .Copy();
+                        .Copy() as Argument<TArgument>;
 
         private static IEnumerable<Command> Commands => _regestry._commands
             .Concat(_regestry._commands.SelectMany(c => c.GetCommands()));

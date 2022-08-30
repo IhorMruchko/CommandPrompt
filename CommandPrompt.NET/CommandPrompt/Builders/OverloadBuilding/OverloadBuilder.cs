@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using CommandPrompt.Arguments;
     using CommandPrompt.Builders.ArgumentBuilding;
+    using CommandPrompt.Converters;
     using CommandPrompt.Executable;
 
     public class OverloadBuilder : IOverloadNameSetter,
@@ -43,7 +44,11 @@
 
         public IOverloadSetter AddOptArgument<TArgument>(string argumentName)
         {
-            _overload.OptionalArgs.Add(new OptionalArgument<TArgument>() { Name = argumentName });
+            _overload.OptionalArgs.Add(new OptionalArgument<TArgument>()
+            {
+                Name = argumentName,
+                Converter = ConverterFactory.GetConverter<TArgument>()
+            });
             return this;
         }
 

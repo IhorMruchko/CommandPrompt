@@ -3,6 +3,7 @@ using CommandPrompt.Builders;
 using CommandPrompt.Builders.CommandBuilding;
 using CommandPrompt.Executable;
 using CommandPrompt.Extensions;
+using CommandPrompt.Validators;
 
 namespace CommandPrompt.Benchmark;
 

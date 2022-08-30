@@ -4,10 +4,8 @@ using System;
 
 namespace CommandPrompt.Builders.ArgumentBuilding
 {
-    public interface IArgumentCreator<TArgument>
+    public interface IArgumentCreator<TArgument> : IArgumentOptionalsSetter<TArgument>
     {
-        IArgumentCreator<TArgument> Validator(Validator<TArgument> validator);
-
         Argument<TArgument> Build();
     }
 }

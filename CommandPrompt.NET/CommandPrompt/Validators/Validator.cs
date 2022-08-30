@@ -6,7 +6,7 @@ namespace CommandPrompt.Validators
 {
     public class Validator<TValidate>
     {
-        private List<Rule> _rules = new List<Rule>();
+        private List<RuleFor<TValidate>> _rules = new List<RuleFor<TValidate>>();
         
         private readonly TValidate _value;
 
@@ -28,6 +28,16 @@ namespace CommandPrompt.Validators
                 throw new InvalidOperationException("Add rule first!");
             }
             _rules[_rules.Count - 1].Message = message;
+            return this;
+        }
+
+        public Validator<TValidate> WithMessage(Func<TValidate, string> message)
+        {
+            if (_rules.Any() == false)
+            {
+                throw new InvalidOperationException("Add rule first!");
+            }
+            _rules[_rules.Count - 1].MessageBuilder = message;
             return this;
         }
 
@@ -53,7 +63,7 @@ namespace CommandPrompt.Validators
 
         public bool Validate(TValidate value)
         {
-            Exceptions = _rules.Where(rule => rule.IsFollowed(value) == false).Select(r => r.Message).ToList();
+            Exceptions = _rules.Where(rule => rule.IsFollowed(value) == false).Select(r => r.Exception(value)).ToList();
             return Exceptions.Any() == false;
         }
 
@@ -61,8 +71,13 @@ namespace CommandPrompt.Validators
         {
             return new Validator<TValidate>(_value)
             {
-                _rules = _rules.Select(r => r.Clone()).ToList()
+                _rules = _rules.Select(r => r.Clone() as RuleFor<TValidate>).ToList()
             };
+        }
+
+        public static implicit operator Validator<TValidate>(Func<TValidate, bool> function)
+        {
+            return new Validator<TValidate>().Should(function);
         }
     }
 }

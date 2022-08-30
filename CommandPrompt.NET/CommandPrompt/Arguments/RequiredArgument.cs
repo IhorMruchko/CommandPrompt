@@ -1,4 +1,5 @@
-﻿using CommandPrompt.Validators;
+﻿using CommandPrompt.Converters.Default;
+using CommandPrompt.Validators;
 using System;
 using System.Collections.Generic;
 
@@ -16,8 +17,8 @@ namespace CommandPrompt.Arguments
             return new RequiredArgument<TArgument>()
             {
                 Name = Name,
-                Converter = Converter?.Clone() as Converter<string, TArgument>,
-                Validator = Validator?.Clone() as Validator<TArgument>
+                Converter = Converter?.Clone() as CommonConverter<TArgument>,
+                Validator = Validator?.Clone()
             };
         }
     }

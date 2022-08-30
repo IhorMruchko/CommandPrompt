@@ -13,7 +13,7 @@
         /// </summary>
         public static Validator<string> NotEmpty 
             => new Validator<string>().ShouldNot(t => t.Trim().Equals(string.Empty))
-                                      .WithMessage("Value should be empty");
+                                      .WithMessage(t => $"Value {t} should not be empty");
         /// <summary>
         /// Check is string starts with upper case.
         /// </summary>
