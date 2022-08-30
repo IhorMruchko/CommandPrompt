@@ -4,11 +4,11 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <PropertyGroup>
-    <Version>0.0.0.2</Version>
+    <Version>0.0.0.3</Version>
     <Authors>Ihor Mruchko</Authors>
     <Description>Provides configuring of commands that can be used in command prompt.</Description>
     <PackageId>CommandPrompt.Configuring</PackageId>
-    <PackageReleaseNotes>Add async execution. Fixed building sequence.</PackageReleaseNotes>
+    <PackageReleaseNotes>Add validators, conveters and copying.</PackageReleaseNotes>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/IhorMruchko/CommandPromp/tree/main/CommandPrompt.NET/CommandPrompt</RepositoryUrl>
     <PackageReadmeFile>ReadME.md</PackageReadmeFile>
