@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommandPrompt.Validators;
+using System;
 using System.Collections.Generic;
 
 namespace CommandPrompt.Arguments
@@ -16,7 +17,7 @@ namespace CommandPrompt.Arguments
             {
                 Name = Name,
                 Converter = Converter?.Clone() as Converter<string, TArgument>,
-                Validator = Validator?.Clone() as Func<TArgument, bool>
+                Validator = Validator?.Clone() as Validator<TArgument>
             };
         }
     }

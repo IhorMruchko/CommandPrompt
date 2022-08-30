@@ -11,11 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.43" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\CommandPrompt\CommandPrompt.csproj" />
   </ItemGroup>
 

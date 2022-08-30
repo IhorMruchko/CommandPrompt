@@ -6,7 +6,7 @@ namespace CommandPrompt.Validators
 {
     public class Validator<TValidate>
     {
-        private readonly List<Rule> _rules = new List<Rule>();
+        private List<Rule> _rules = new List<Rule>();
         
         private readonly TValidate _value;
 
@@ -39,7 +39,7 @@ namespace CommandPrompt.Validators
 
         public Validator<TValidate> ShouldNot(Func<TValidate, bool> constraint)
         {
-            _rules.Add(new RuleFor<TValidate>() { Rule = (validator) => constraint(validator) == false });
+            _rules.Add(new RuleFor<TValidate>() { Rule = constraint, IsInverted = true });
             return this;
         }
 
@@ -55,6 +55,14 @@ namespace CommandPrompt.Validators
         {
             Exceptions = _rules.Where(rule => rule.IsFollowed(value) == false).Select(r => r.Message).ToList();
             return Exceptions.Any() == false;
+        }
+
+        public Validator<TValidate> Clone()
+        {
+            return new Validator<TValidate>(_value)
+            {
+                _rules = _rules.Select(r => r.Clone()).ToList()
+            };
         }
     }
 }

@@ -6,11 +6,20 @@ namespace CommandPrompt.Validators
     {
         internal Func<TTarget, bool> Rule { get; set; }
 
+        public override Rule Clone()
+        {
+            return new RuleFor<TTarget>()
+            {
+                Rule = Rule,
+                Message = Message
+            };
+        }
+
         public override bool IsFollowed (object value)
         {
             try
             {
-                return value is TTarget target && Rule(target);
+                return value is TTarget target && (Rule(target) ^ IsInverted);
             }
             catch (Exception)
             {

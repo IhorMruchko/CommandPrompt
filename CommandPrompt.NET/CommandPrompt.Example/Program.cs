@@ -1,16 +1,17 @@
 ﻿using CommandPrompt;
 using CommandPrompt.Builders;
 using CommandPrompt.Extensions;
+using CommandPrompt.Validators.StringValidators;
 
-var endingArgument = Builder.Optional<char> ()
+var endingArgument = Builder.Optional<char>()
                                     .Name("ending")
                                     .Converter(c => c[0])
                                     .Build();
 
- var usernameArgument = Builder.Required<string>()
+var usernameArgument = Builder.Required<string>()
                                        .Name("username")
                                        .Converter(c => c)
-                                       .Validator(c => char.IsUpper(c[0]))
+                                       .Validator(StringValidator.IsUpperCase)
                                        .Build();
 
 var nameOverload = Builder.Overload.Name("runner")
@@ -25,4 +26,5 @@ var helloCommand = Builder.Command.Name("hello")
 
 CommandRegestry.Register.Add(helloCommand);
 
-Console.WriteLine(CommandRegestry.GetCommand("hello"));
+while (true)
+    await CommandRegestry.Invoke(Console.ReadLine()?.Split() ?? Array.Empty<string>());

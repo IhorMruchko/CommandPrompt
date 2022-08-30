@@ -1,4 +1,5 @@
 ﻿using CommandPrompt.Arguments;
+using CommandPrompt.Validators;
 using System;
 
 namespace CommandPrompt.Builders.ArgumentBuilding
@@ -25,7 +26,7 @@ namespace CommandPrompt.Builders.ArgumentBuilding
             return this;
         }
 
-        public IArgumentCreator<TArgument> Validator(Func<TArgument, bool> validator)
+        public IArgumentCreator<TArgument> Validator(Validator<TArgument> validator)
         {
             argument.Validator = validator;
             return this;
